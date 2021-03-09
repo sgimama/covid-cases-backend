@@ -24,7 +24,7 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 
   sequelize
-    .sync({ force: true })
+    .sync({ force: false })
     .then(() => {
       console.log("tablas creadas");
     })
@@ -32,3 +32,4 @@ app.listen(PORT, () => {
       console.log(`Se ha producido un error ${error}.`);
     });
 });
+ 

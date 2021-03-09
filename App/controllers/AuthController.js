@@ -13,11 +13,13 @@ module.exports = {
       where: {
         email: email,
       },
+      include: "wallet",
     })
       .then((user) => {
         if (!user) {
           res.status(404).json({ msg: "The email does not exist" });
         } else {
+          //Compare passwords
           if (bcrypt.compareSync(password, user.password)) {
             //Create token
             let token = jwt.sign({ user: user }, authConfig.secret, {
@@ -51,14 +53,19 @@ module.exports = {
         //Create wallet
         Wallet.create({
           userId: user.id,
-        });
-        //Create token
-        let token = jwt.sign({ user: user }, authConfig.secret, {
-          expiresIn: authConfig.expires,
-        });
-        res.json({
-          user: user,
-          token: token,
+        }).then((wallet) => {
+          user = {
+            ...user.dataValues,
+            wallet: wallet.dataValues,
+          };
+          //Create token
+          let token = jwt.sign({ user: user }, authConfig.secret, {
+            expiresIn: authConfig.expires,
+          });
+          res.json({
+            user: user,
+            token: token,
+          });
         });
       })
       .catch((err) => {
