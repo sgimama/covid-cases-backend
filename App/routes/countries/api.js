@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const http = require("./http");
-const User = require('../../database/models/user.model');
-const axios = require("axios");
-
 
 router.get('/single/:data', async (req,res) =>{
     const result = await http.get(`name/${req.params.data}?fullText=true`);
@@ -32,13 +29,5 @@ router.get('/all', async(req,res) =>{
     })
     res.json(countries);
 })
-
-router.post('/', (req,res) =>{
-   
-})
- 
- router.put('/:id', async (req,res) =>{
-
- }); 
 
 module.exports = router;

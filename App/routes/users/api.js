@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../../database/models/user.model');
+const User = require('../../models/user.model');
 
 
 
@@ -10,7 +10,7 @@ router.get('/', (req,res) =>{
     }).then(users => res.json(users));
 })
 
-router.post('/', (req,res) =>{
+router.post('/singup', (req,res) =>{
    
 })
  
