@@ -9,7 +9,7 @@ const app = express();
 require("./App/database/asociations");
 
 var corsOptions = {
-  origin: "localhost:3000",
+  origin: "*",
 };
 
 app.use(cors());
@@ -23,7 +23,7 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 
   sequelize
-    .sync({ force: false })
+    .sync({ force: true })
     .then(() => {
       console.log("tables makes");
     })
