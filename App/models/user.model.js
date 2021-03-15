@@ -17,21 +17,10 @@ User.init(
       type: DataTypes.STRING,
       unique: true,
       allowNull: false,
-      validate:{
-        isEmail: {
-          msg: "it must be a valid email"
-        }
-      }
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate:{
-        len: {
-          args: [5-255],
-          msg: "the password must be at least 5 characters long"
-        }
-      }
     }
   },
   {

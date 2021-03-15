@@ -42,6 +42,7 @@ module.exports = {
       cherry: 40,
       apple: 10,
       banana: 5,
+      lemon: 0,
     },
   },
 };

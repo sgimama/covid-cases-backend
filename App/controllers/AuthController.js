@@ -41,32 +41,47 @@ module.exports = {
 
   //register
   signUp(req, res) {
-    //Encrypt password
-    let password = bcrypt.hashSync(req.body.password, authConfig.rounds);
-    //Create user
-    User.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: password,
+    User.findOne({
+      where: {
+        email: req.body.email,
+      },
     })
       .then((user) => {
-        //Create wallet
-        Wallet.create({
-          userId: user.id,
-        }).then((wallet) => {
-          user = {
-            ...user.dataValues,
-            wallet: wallet.dataValues,
-          };
-          //Create token
-          let token = jwt.sign({ user: user }, authConfig.secret, {
-            expiresIn: authConfig.expires,
-          });
-          res.json({
-            user: user,
-            token: token,
-          });
-        });
+        //If user not exist
+        if (!user) {
+          //Encrypt password
+          let password = bcrypt.hashSync(req.body.password, authConfig.rounds);
+          //Create user
+          User.create({
+            name: req.body.name,
+            email: req.body.email,
+            password: password,
+          })
+            .then((user) => {
+              //Create wallet
+              Wallet.create({
+                userId: user.id,
+              }).then((wallet) => {
+                user = {
+                  ...user.dataValues,
+                  wallet: wallet.dataValues,
+                };
+                //Create token
+                let token = jwt.sign({ user: user }, authConfig.secret, {
+                  expiresIn: authConfig.expires,
+                });
+                res.json({
+                  user: user,
+                  token: token,
+                });
+              });
+            })
+            .catch((err) => {
+              res.status(500).json(err);
+            });
+        } else {
+          res.status(404).json({ msg: "The email already exist" });
+        }
       })
       .catch((err) => {
         res.status(500).json(err);
