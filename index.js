@@ -3,14 +3,10 @@ const cors = require("cors");
 const apiRouter = require("./App/routes/api");
 const sequelize = require("./App/database/db");
 
-const PORT = 3004;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 require("./App/database/asociations");
-
-var corsOptions = {
-  origin: "*",
-};
 
 app.use(cors());
 app.use(express.json());
