@@ -1,10 +1,6 @@
-const router = require('express').Router();
-const authRouter = require('./auth/api');
-const slotMachineRouter = require('./slotMachine/api');
-const countriesRouter = require('./countries/api');
+const router = require("express").Router();
+const CovidCasesController = require("../controllers/CovidCasesController");
 
-router.use('/auth', authRouter);
-router.use('/slotMachine', slotMachineRouter);
-router.use('/countries', countriesRouter);
+router.post("/getcases", CovidCasesController.getCases);
 
 module.exports = router;
