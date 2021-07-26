@@ -34,7 +34,7 @@ module.exports = {
     for (let day in historyConfirmed) {
       const dataDay = {
         day: day,
-        confirmed: historyDeaths[day],
+        confirmed: historyConfirmed[day],
         deaths: historyDeaths[day],
       };
       history.push(dataDay);
